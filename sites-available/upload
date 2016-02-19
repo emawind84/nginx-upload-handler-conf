@@ -1,0 +1,13 @@
+server {
+    listen 8180;
+    server_name '';
+    root /home/sangah/util/html5-file-upload;
+    index index.html;
+
+    location / {}
+
+    location /upload {
+        include includes/upload_handler.conf;
+    }
+
+}
