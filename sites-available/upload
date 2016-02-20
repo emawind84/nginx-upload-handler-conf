@@ -1,5 +1,5 @@
 server {
-    listen 8180;
+    listen 127.0.0.1:8180;
     server_name '';
     root /tmp;
 
