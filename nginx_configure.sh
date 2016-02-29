@@ -18,23 +18,29 @@ if [ ! -d "sites-enabled" ]; then
   mkdir sites-enabled
 fi
 
-if [ ! -f /etc/nginx/includes/upload_handler.conf ]; then
-    echo "Downloading upload_handler.conf..."
-    wget https://raw.githubusercontent.com/emawind84/nginx-upload-handler-conf/master/includes/upload_handler.conf \
-    -O includes/upload_handler.conf
+if [ -f /etc/nginx/includes/upload_handler.conf ]; then
+    mv /etc/nginx/includes/upload_handler.conf /etc/nginx/includes/upload_handler.conf.bak
 fi
 
-if [ ! -f /etc/nginx/nginx.conf ]; then
-    echo "Downloading nginx.conf..."
-    wget https://raw.githubusercontent.com/emawind84/nginx-upload-handler-conf/master/nginx.conf \
-    -O /etc/nginx/nginx.conf
+echo "Downloading upload_handler.conf..."
+wget https://raw.githubusercontent.com/emawind84/nginx-upload-handler-conf/master/includes/upload_handler.conf \
+-O includes/upload_handler.conf
+
+if [ -f /etc/nginx/nginx.conf ]; then
+    mv /etc/nginx/nginx.conf /etc/nginx/nginx.conf.bak
 fi
 
-if [ ! -f /etc/nginx/sites-available/upload ]; then
-    echo "Downloading upload config file..."    
-    wget https://raw.githubusercontent.com/emawind84/nginx-upload-handler-conf/master/sites-available/upload \
-    -O /etc/nginx/sites-available/upload
+echo "Downloading nginx.conf..."
+wget https://raw.githubusercontent.com/emawind84/nginx-upload-handler-conf/master/nginx.conf \
+-O /etc/nginx/nginx.conf
+
+if [ -f /etc/nginx/sites-available/upload ]; then
+    mv /etc/nginx/sites-available/upload /etc/nginx/sites-available/upload.bak
 fi
+
+echo "Downloading upload config file..."    
+wget https://raw.githubusercontent.com/emawind84/nginx-upload-handler-conf/master/sites-available/upload \
+-O /etc/nginx/sites-available/upload
 
 if [ ! -f /etc/nginx/sites-enabled/upload ]; then
     echo "Creating link for upload file"
