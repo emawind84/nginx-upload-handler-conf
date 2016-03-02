@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 NGINX_CONF_PATH='/etc/nginx'
-
+GIT_REPO=https://raw.githubusercontent.com/emawind84/nginx-upload-handler-conf/master
 set -e
 
 cd $NGINX_CONF_PATH
@@ -23,7 +23,7 @@ if [ -f /etc/nginx/includes/upload_handler.conf ]; then
 fi
 
 echo "Downloading upload_handler.conf..."
-wget https://raw.githubusercontent.com/emawind84/nginx-upload-handler-conf/master/includes/upload_handler.conf \
+wget $GIT_REPO/includes/upload_handler.conf \
 -O includes/upload_handler.conf
 
 if [ -f /etc/nginx/nginx.conf ]; then
@@ -31,7 +31,7 @@ if [ -f /etc/nginx/nginx.conf ]; then
 fi
 
 echo "Downloading nginx.conf..."
-wget https://raw.githubusercontent.com/emawind84/nginx-upload-handler-conf/master/nginx.conf \
+wget $GIT_REPO/nginx.conf \
 -O /etc/nginx/nginx.conf
 
 if [ -f /etc/nginx/sites-available/upload ]; then
@@ -39,7 +39,7 @@ if [ -f /etc/nginx/sites-available/upload ]; then
 fi
 
 echo "Downloading upload config file..."    
-wget https://raw.githubusercontent.com/emawind84/nginx-upload-handler-conf/master/sites-available/upload \
+wget $GIT_REPO/sites-available/upload \
 -O /etc/nginx/sites-available/upload
 
 if [ ! -f /etc/nginx/sites-enabled/upload ]; then
@@ -59,6 +59,23 @@ if command -v htpasswd >/dev/null 2>&1; then
 else
     echo 'htpasswd command not present, cannot generate basic auth user'
     exit 1
+fi
+
+if [ ! -f /etc/init.d/nginx ]; then
+    echo "Creating init script..."
+    wget $GIT_REPO/extra/nginx \
+    -O /etc/init.d/nginx
+    
+    chmod u+x /etc/init.d/nginx
+    
+    if command -v chkconfig ; then
+        chkconfig --add /etc/init.d/nginx
+        chkconfig --level 345 nginx on
+    fi
+    
+    if command -v update-rc.d ; then
+        update-rc.d -f nginx defaults
+    fi
 fi
 
 echo "Checking nginx configuration..."
