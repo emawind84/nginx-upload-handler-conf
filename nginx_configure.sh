@@ -95,8 +95,8 @@ fi
 
 # test upload request
 echo "Testing file upload..."
-dd if=/dev/zero of=/tmp/temp.tmp bs=512k count=1 >/dev/null 2>&1
-curl --user ngxupload:ngxupload --data-binary '@/tmp/test.tmp' http://127.0.0.1:8180/upload >/dev/null 2>&1
+dd if=/dev/zero of=/tmp/test.tmp bs=512k count=1 >/dev/null 2>&1
+curl --user ngxupload:ngxupload --data-binary '@/tmp/test.tmp' http://127.0.0.1:8180/upload 2>&1
 
 if [ $? -eq 1 ]; then
     exit 1
