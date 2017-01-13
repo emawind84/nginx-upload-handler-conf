@@ -1,16 +1,16 @@
 server {
-    listen 127.0.0.1:8180;
-    server_name '';
-    index index.html index.php;
-    root www;
+	listen 127.0.0.1:8180;
+	server_name '';
+	index index.html index.php;
+	root www;
 
-    location / { 
+	location / { 
 		allow all; 
 	}
 
-    location = /upload {
-        include includes/upload_handler.conf;
-    }
+	location = /upload {
+		include includes/upload_handler.conf;
+	}
 	
 	location ~ \.php$ {
 		include         fastcgi_params;
