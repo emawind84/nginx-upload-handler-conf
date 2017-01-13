@@ -20,7 +20,7 @@ if (strpos($filepath, 'cygdrive') !== false) {
 	$filepath = preg_replace($pattern, $replacement, $filepath);
 }
 
-$data = [ 'fileId' => basename($filepath), 'filePath' => $filepath, 'fileName' => $filename, 'fileSize' => $filesize ];
+$data = array( 'fileId' => basename($filepath), 'filePath' => $filepath, 'fileName' => $filename, 'fileSize' => $filesize );
 
 echo json_encode( $data );
 ?>
