@@ -42,9 +42,7 @@ fi
 
 if [ ! -f /etc/init.d/nginx ]; then
     echo "Creating init script..."
-    wget $NGINX_CONF_PATH/setup/extra/nginx \
-    -O /etc/init.d/nginx
-    
+    cp $NGINX_CONF_PATH/setup/extra/nginx /etc/init.d/nginx
     chmod u+x /etc/init.d/nginx
     
     if command -v chkconfig ; then
