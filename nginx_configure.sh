@@ -2,7 +2,6 @@
 
 NGINX_CONF_PATH='/etc/nginx'
 GIT_REPO=https://raw.githubusercontent.com/emawind84/nginx-upload-handler-conf/master
-GIT_REPO=https://raw.githubusercontent.com/sangahco/nginx-upload-handler-conf/master
 set -e
 
 cd $NGINX_CONF_PATH
