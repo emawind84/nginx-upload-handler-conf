@@ -26,9 +26,6 @@ tar -xvf nginx-conf.tar.bz2 && rm nginx-conf.tar.bz2
 chown -R root:root $NGINX_CONF_PATH/setup
 cp -r $NGINX_CONF_PATH/setup/* $NGINX_CONF_PATH
 
-echo "Downloading php file..."
-wget $GIT_REPO/www/fileinfo.php -O www/fileinfo.php
-
 if [ $(cat /etc/passwd | grep www-data | wc -l) == 0 ]; then
     echo "Creating user www-data..."
     useradd -M www-data
