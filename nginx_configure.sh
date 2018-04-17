@@ -18,34 +18,38 @@ if [ ! -d "sites-enabled" ]; then
   mkdir sites-enabled
 fi
 
+if [ ! -d "www" ]; then
+  mkdir www
+fi
+
 if [ -f /etc/nginx/includes/upload_handler.conf ]; then
     mv /etc/nginx/includes/upload_handler.conf /etc/nginx/includes/upload_handler.conf.bak
 fi
 
 echo "Downloading upload_handler.conf..."
-wget $GIT_REPO/includes/upload_handler.conf \
--O includes/upload_handler.conf
+wget $GIT_REPO/includes/upload_handler.conf -O includes/upload_handler.conf
 
 if [ -f /etc/nginx/nginx.conf ]; then
     mv /etc/nginx/nginx.conf /etc/nginx/nginx.conf.bak
 fi
 
 echo "Downloading nginx.conf..."
-wget $GIT_REPO/nginx.conf \
--O /etc/nginx/nginx.conf
+wget $GIT_REPO/nginx.conf -O /etc/nginx/nginx.conf
 
 if [ -f /etc/nginx/sites-available/upload ]; then
     mv /etc/nginx/sites-available/upload /etc/nginx/sites-available/upload.bak
 fi
 
 echo "Downloading upload config file..."    
-wget $GIT_REPO/sites-available/upload \
--O /etc/nginx/sites-available/upload
+wget $GIT_REPO/sites-available/upload -O /etc/nginx/sites-available/upload
 
 if [ ! -f /etc/nginx/sites-enabled/upload ]; then
     echo "Creating link for upload file"
     ln -s /etc/nginx/sites-available/upload /etc/nginx/sites-enabled/upload
 fi
+
+echo "Downloading php file..."
+wget $GIT_REPO/www/fileinfo.php -O www/fileinfo.php
 
 if [ $(cat /etc/passwd | grep www-data | wc -l) == 0 ]; then
     echo "Creating user www-data..."
@@ -63,8 +67,7 @@ fi
 
 if [ ! -f /etc/init.d/nginx ]; then
     echo "Creating init script..."
-    wget $GIT_REPO/extra/nginx \
-    -O /etc/init.d/nginx
+    wget $GIT_REPO/extra/nginx -O /etc/init.d/nginx
     
     chmod u+x /etc/init.d/nginx
     
